@@ -19,7 +19,7 @@ class HabitTestCase(APITestCase):
         self.client.force_authenticate(user=self.user)
 
         self.habit = Habit.objects.create(
-            owner=self.user, action="Читать книгу", place="дом", is_nice=True
+            owner=self.user, action="читать книгу", place="дом", is_nice=True
         )
 
     def test_habit_create(self):
@@ -45,8 +45,8 @@ class HabitTestCase(APITestCase):
             "results": [
                 {
                     "id": self.habit.pk,
-                    "place": "test",
-                    "action": "test",
+                    "place": "Читать книгу",
+                    "action": "дом",
                     "owner": self.user.pk,
                 },
             ],
@@ -56,20 +56,20 @@ class HabitTestCase(APITestCase):
     def test_habit_update(self):
         url = reverse("main:habit_update", args=(self.habit.pk,))
         data = {
-            "place": "дом",
-            "action": "чтение книги",
+            "place": "улица",
+            "action": "считать ворон",
             "owner": self.user.pk,
         }
         response = self.client.patch(url, data)
         data = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(data.get("place"), "дом")
+        self.assertEqual(data.get("place"), "улица")
 
     def test_habit_delete(self):
         url = reverse("main:habit_delete", args=(self.habit.pk,))
         data = {
-            "place": "test",
-            "action": "test",
+            "place": "дом",
+            "action": "читать книгу",
             "owner": self.user.pk,
         }
         response = self.client.delete(url, data)
@@ -79,8 +79,8 @@ class HabitTestCase(APITestCase):
     def test_habit_time_to_done(self):
         url = reverse("main:habit_create")
         data = {
-            "place": "test",
-            "action": "test",
+            "place": "улица",
+            "action": "считать ворон",
             "owner": self.user.pk,
             "time_to_done": "130",
         }
@@ -90,17 +90,17 @@ class HabitTestCase(APITestCase):
     def test_habit_rel_hab_award(self):
         url = reverse("main:habit_create")
         data = {
-            "place": "test",
-            "action": "test",
+            "place": "улица",
+            "action": "считать ворон",
             "owner": self.user.pk,
             "related_habit": "2",
-            "award": "test",
+            "award": "10 рублей",
         }
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_habit_period(self):
         url = reverse("main:habit_create")
-        data = {"place": "test", "action": "test", "period": 9}
+        data = {"place": "улица", "считать ворон": "test", "period": 9}
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

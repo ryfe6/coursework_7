@@ -30,7 +30,6 @@ class HabitListApiView(ListAPIView):
     permission_classes = [IsAuthenticated, IsOwner]
 
 
-
 class HabitRetrieveApiView(RetrieveAPIView):
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer

@@ -31,7 +31,7 @@ class HabitListApiView(ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Habit.objects.filter(user=user)
+        return Habit.objects.filter(owner=user)
 
 class HabitRetrieveApiView(RetrieveAPIView):
     queryset = Habit.objects.all()

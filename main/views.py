@@ -27,8 +27,11 @@ class HabitCreateApiView(CreateAPIView):
 class HabitListApiView(ListAPIView):
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer
-    permission_classes = [IsAuthenticated, IsOwner]
+    permission_classes = [IsAuthenticated, IsOwner, ]
 
+    def get_queryset(self):
+        user = self.request.user
+        return Habit.objects.filter(user=user)
 
 class HabitRetrieveApiView(RetrieveAPIView):
     queryset = Habit.objects.all()

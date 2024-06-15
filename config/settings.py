@@ -89,11 +89,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": getenv("NAME"),
-        "USER": getenv("USER"),
-        "PASSWORD": getenv("PASSWORD"),
-        "HOST": getenv("HOST"),
-        "PORT": getenv("PORT"),
+        "NAME": getenv("POSTGRES_DB"),
+        "USER": getenv("POSTGRES_USER"),
+        "PASSWORD": getenv("POSTGRES_PASSWORD"),
+        "HOST": getenv("POSTGRES_HOST"),
+        "PORT": getenv("POSTGRES_PORT"),
     }
 }
 
@@ -164,7 +164,7 @@ TELEGRAM_TOKEN = getenv("TELEGRAM_TOKEN")
 TG_URL = getenv("TG_URL")
 
 # URL-адрес брокера сообщений
-CELERY_BROKER_URL = "redis://localhost:6379"  # Например, Redis, который по умолчанию работает на порту 6379
+CELERY_BROKER_URL = getenv("CELERY_BROKER_URL")  # Например, Redis, который по умолчанию работает на порту 6379
 
 # URL-адрес брокера результатов, также Redis
 CELERY_RESULT_BACKEND = getenv("CELERY_RESULT_BACKEND")

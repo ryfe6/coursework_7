@@ -13,6 +13,3 @@ RUN poetry install --no-dev
 
 # Теперь копируем остальные файлы проекта
 COPY . /app
-
-# Запускаем миграции и сервер Django, указывая хост
-CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
